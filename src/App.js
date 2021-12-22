@@ -1,12 +1,11 @@
 import Header from './components/Header'
 
 const App = () => {
-
   return (
-    <div className="Container">
+    <div className='Container'>
       <Header />
     </div>
-  );
+  )
 }
 
 export default App;
