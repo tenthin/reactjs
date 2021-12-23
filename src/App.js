@@ -1,7 +1,10 @@
 import { useState,useEffect } from 'react'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 import Header from './components/Header'
+import Footer from './components/Footer'
 import Tasks from './components/Tasks'
 import AddTask from './components/AddTask'
+import About from './components/About'
 
 const App = () => {
   const[showAddTask, setShowAddTask] = useState
@@ -21,6 +24,7 @@ const App = () => {
   const fetchTasks = async() => {
     const res = await fetch('http://localhost:5000/tasks')
     const data = await res.json()
+
     return data
   }
 
@@ -35,12 +39,12 @@ const App = () => {
 
 // Add Task
   const addTask = async (task) => {
-    const res = await fetch('http://localhost:5000/tasks',{
+    const res = await fetch('http://localhost:5000/tasks', {
       method:'POST',
-      headers:{
-        'Content-type': 'application/json'
+      headers: {
+        'Content-type': 'application/json',
       },
-      body: JSON.stringify(task)
+      body: JSON.stringify(task),
     })
 
     const data = await res.json()
@@ -56,7 +60,7 @@ const App = () => {
 
 // Delete Task
   const deleteTask = async (id) => {
-    await fetch(`http://localhost:5000/tasks/${id}`, {
+    const res = await fetch(`http://localhost:5000/tasks/${id}`, {
     method:'DELETE',
   })
 
@@ -87,16 +91,25 @@ const toggleReminder = async (id) => {
 }
 
   return (
+    <Router>
     <div className='Container'>
-      <Header onAdd={() => setShowAddTask
-      (!showAddTask)} showAdd={showAddTask}/>
+      <Header 
+        onAdd={() => setShowAddTask
+        (!showAddTask)} 
+        showAdd={showAddTask}
+      />
       {showAddTask && <AddTask onAdd={addTask}/>}
       {tasks.length > 0 ? (
-      <Tasks tasks={tasks} onDelete=
-      {deleteTask} onToggle={toggleReminder}/>)
-      :( 'No Tasks To Show'
+        <Tasks tasks={tasks} onDelete=
+        {deleteTask} onToggle={toggleReminder}
+        />
+      ):( 
+        'No Tasks To Show'
       )}
+      <Route path='/about' component={About} />
+      <Footer />
     </div>
+    </Router>
   )
 }
 
