@@ -106,6 +106,10 @@ const toggleReminder = async (id) => {
       ):( 
         'No Tasks To Show'
       )}
+      <Route path='/' exact  render={(props)
+        => (
+          
+        )} />
       <Route path='/about' component={About} />
       <Footer />
     </div>
